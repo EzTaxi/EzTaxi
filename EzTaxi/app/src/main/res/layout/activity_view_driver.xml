@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    tools:context=".ViewDriver">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/viewDriverBackButton"
+        android:layout_width="55dp"
+        android:layout_height="37dp"
+        android:background="@drawable/custom_button"
+        android:text="back"
+        android:fontFamily="@font/moderne"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.026" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/LocateDriver"
+        android:layout_width="121dp"
+        android:layout_height="40dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/moderne"
+        android:text="Locate"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.867" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancelRequest"
+        android:layout_width="153dp"
+        android:layout_height="39dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/moderne"
+        android:text="cancel request"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.767" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="50px"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/moderne"
+            android:text="Name"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="273dp" />
+
+        <TextView
+            android:id="@+id/driverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="None"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="273dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:fontFamily="@font/moderne"
+            android:text="Plate Number"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="392dp" />
+
+        <TextView
+            android:id="@+id/driverPlateNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:fontFamily="@font/moderne"
+            android:text="None"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp"
+            tools:layout_editor_absoluteY="392dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:fontFamily="@font/moderne"
+            android:text="Phone Number"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp" />
+
+        <TextView
+            android:id="@+id/driverNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:fontFamily="@font/moderne"
+            android:text="None"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:fontFamily="@font/moderne"
+            android:text="Request Status"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp" />
+
+        <TextView
+            android:id="@+id/requeststatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:fontFamily="@font/moderne"
+            android:text="None"
+            android:textColor="#37375E"
+            android:textSize="60px"
+            tools:layout_editor_absoluteX="160dp" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

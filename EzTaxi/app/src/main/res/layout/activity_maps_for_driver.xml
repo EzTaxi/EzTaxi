@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="horizontal"
+android:layout_gravity="center">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/mapsDriverBackButton"
+    android:layout_width="55dp"
+    android:layout_height="37dp"
+    android:background="@drawable/custom_button"
+    android:text="back"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.049"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.026" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/AcceptRequest"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/custom_button"
+            android:text="Accept Request"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/CompleteRide"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/custom_button"
+            android:text="Completed Ride"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="376dp"
+            android:layout_height="381dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UserRequestStatus"
+            tools:context=".MapsForDriver"
+            tools:layout="@layout/maps_for_driver_support_layout" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="600dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="26dp" />
+
+        <TextView
+            android:id="@+id/userNameOfUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="568dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Name of User"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Address"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameOfUser"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <TextView
+            android:id="@+id/addressOfUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Address of User"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Request Status"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addressOfUser" />
+
+        <TextView
+            android:id="@+id/UserRequestStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/moderne"
+            android:gravity="center"
+            android:text="Status of Request"
+            android:textColor="#37375E"
+            android:textSize="40px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

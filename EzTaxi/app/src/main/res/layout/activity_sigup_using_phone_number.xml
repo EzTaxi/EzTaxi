@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SigupUsingPhoneNumber"
+    android:background="@drawable/background_main">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/generateOTPBtn"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="sans-serif-black"
+        android:text="Generate otp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberSignUp" />
+
+    <ImageView
+        android:id="@+id/Logo"
+        android:layout_width="218dp"
+        android:layout_height="149dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/eztaxilogo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/verifyOtpBtn"
+        android:layout_width="157dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="sans-serif-black"
+        android:text="Verify OTP"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OTPVerify"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <EditText
+        android:id="@+id/FullNamephoneSignup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/Logo"
+        tools:layout_editor_absoluteX="100dp" />
+
+    <EditText
+        android:id="@+id/phoneNumberSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        app:layout_constraintTop_toBottomOf="@+id/FullNamephoneSignup"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/OTPVerify"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="OTP"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/generateOTPBtn"
+        tools:layout_editor_absoluteX="100dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

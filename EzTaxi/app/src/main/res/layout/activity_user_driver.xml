@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    tools:context=".UserDriverActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="272dp"
+        android:layout_height="202dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/eztaxilogo" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/acceptedReqBackButton"
+        android:layout_width="55dp"
+        android:layout_height="37dp"
+        android:background="@drawable/custom_button"
+        android:text="back"
+        android:fontFamily="@font/moderne"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Welcome!"
+        android:fontFamily="@font/moderne"
+        android:textSize="100px"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/seeReqButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="See requests"
+        android:background="@drawable/custom_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/moderne"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.113"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/moderne"
+        android:background="@drawable/custom_button"
+        android:text="log out"
+        app:layout_constraintTop_toBottomOf="@+id/seeReqButton"
+        tools:layout_editor_absoluteX="0dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

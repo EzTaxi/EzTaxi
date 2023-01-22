@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "427485063159",
+    "firebase_url": "https://eztaxi-98b1f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "eztaxi-98b1f",
+    "storage_bucket": "eztaxi-98b1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427485063159:android:929ca86d46d38ef0cc70f2",
+        "android_client_info": {
+          "package_name": "com.example.eztaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427485063159-evmeqcjm8igs0tabkkd8st503f2s4grq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdCjuq7C3FVblWhDGN_ia-gpUsG4OzCPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427485063159-evmeqcjm8igs0tabkkd8st503f2s4grq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427485063159:android:56a6981642bbb1abcc70f2",
+        "android_client_info": {
+          "package_name": "com.example.fbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427485063159-evmeqcjm8igs0tabkkd8st503f2s4grq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdCjuq7C3FVblWhDGN_ia-gpUsG4OzCPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427485063159-evmeqcjm8igs0tabkkd8st503f2s4grq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
