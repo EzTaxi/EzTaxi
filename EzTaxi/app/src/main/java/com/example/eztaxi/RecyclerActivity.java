@@ -56,12 +56,11 @@ public class RecyclerActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Users, RecyclerAdapter>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RecyclerAdapter holder, @SuppressLint("RecyclerView") int position, @NonNull Users users) {
-
+                //should be the same with name in the USERS,Recycler, and in the activity that has been used to
                 holder.Name.setText(users.getUserName());
                 holder.address.setText(users.getAddress());
                 holder.request_status.setText(users.getRequest_status());
-
-
+                holder.driverName.setText(users.getDriverName());
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

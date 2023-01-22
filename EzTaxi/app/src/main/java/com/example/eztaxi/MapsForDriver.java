@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,7 +66,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
     private DatabaseReference driverReferenceInitial,driverReferenceForName,driverReferenceForPLTN, databaseReference,
             driverReferenceForNum, driverNameRef, driverPlateNumRef, driverNumRef, acceptRef, completeRef,userLatitude,userLongitude, userAddress,
             passengerLatRef,passengerLongRef, driverLatRef, driverLongRef, getdriverLatRef, getdriverLongRef,driverReferenceLocation
-            ,CompletedRideRef, PointsRef, addPointsRef;
+            ,CompletedRideRef, PointsRef, addPointsRef, drivernameGoToUserRef,yesRef;
     private FirebaseAuth mAuth;
     Marker userLocationMarker, passengerLocation;
     private SupportMapFragment supportMapFragment;
@@ -127,7 +128,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
         driverNameRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                driverName = snapshot.child("userName").getValue().toString();
+                driverName = snapshot.child("driverName").getValue().toString();
             }
 
             @Override
@@ -164,10 +165,9 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
 
         try {
-            String acceptedReqs = getIntent().getStringExtra("UserRequested");
+            String acceptedReqs = getIntent().getStringExtra("UserRequested"); // from RecyclerActivity
             driverReferenceInitial = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             driverReferenceLocation = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
-            driverReferenceForName = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             driverReferenceForName = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             driverReferenceForPLTN = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             driverReferenceForNum = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
@@ -179,12 +179,46 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             passengerLongRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             databaseReference = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             CompletedRideRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
-
+            drivernameGoToUserRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             getdriverLongRef = FirebaseDatabase.getInstance().getReference("Registered User");
             getdriverLatRef = FirebaseDatabase.getInstance().getReference("Registered User");
 
             addPointsRef =FirebaseDatabase.getInstance().getReference("Registered User").child(acceptedReqs);
             PointsRef =FirebaseDatabase.getInstance().getReference("Registered User").child(acceptedReqs);
+            yesRef =FirebaseDatabase.getInstance().getReference().child("Registered User").child(currentUserId);
+            yesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        String na = snapshot.child("driverName").getValue().toString();
+                        Log.d(TAG, "na " + na);
+                        driverReferenceForName.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String me = snapshot.child("driverName").getValue().toString();
+                                Log.d(TAG, "me " + me);
+                                if(na.equals(me)){
+                                    acceptRequestReqButton.setVisibility(View.VISIBLE);
+                                    completeRide.setVisibility(View.VISIBLE);
+                                }else {
+                                    acceptRequestReqButton.setVisibility(View.GONE);
+                                    completeRide.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
 
             PointsRef.addValueEventListener(new ValueEventListener() {
@@ -227,7 +261,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                 }
             });
 
-
+            // for Passenger
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -307,9 +341,17 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             getdriverLatRef.child(currentUserId).child("Current User Location").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    driverLat = (double) snapshot.child("Latitude").getValue();
-                    driverLatRef.child("Accepted").child(currentUserId).child("Latitude").setValue(driverLat);
-                    Log.d(TAG, "Latitude " + driverLat);
+                    try {
+                        if (snapshot.exists()) {
+                            driverLat = (double) snapshot.child("Latitude").getValue();
+                            driverLatRef.child("Accepted").child(currentUserId).child("Latitude").setValue(driverLat);
+                            Log.d(TAG, "Latitude " + driverLat);
+                        }
+
+                    }catch (Exception e){
+
+                    }
+
                 }
 
                 @Override
@@ -321,9 +363,17 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             getdriverLongRef.child(currentUserId).child("Current User Location").child("Longitude").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    driverLong = (double) snapshot.getValue();
-                    driverLongRef.child("Accepted").child(currentUserId).child("Longitude").setValue(driverLong);
-                    Log.d(TAG, "Longitude " + driverLong);
+                    try {
+                        if (snapshot.exists()) {
+                            driverLong = (double) snapshot.getValue();
+                            driverLongRef.child("Accepted").child(currentUserId).child("Longitude").setValue(driverLong);
+                            Log.d(TAG, "Longitude " + driverLong);
+                        }
+
+                    }catch (Exception e){
+
+                    }
+
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -351,6 +401,20 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 backBtn.setVisibility(View.GONE);
+                drivernameGoToUserRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            drivernameGoToUserRef.child("driverName").setValue(driverName);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 acceptRef.child("request_status").setValue("Accepted");
                 driverReferenceInitial.child("Accepted").child(currentUserId);
                 driverReferenceInitial.addValueEventListener(new ValueEventListener() {

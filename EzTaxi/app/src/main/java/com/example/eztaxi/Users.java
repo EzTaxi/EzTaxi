@@ -1,7 +1,7 @@
 package com.example.eztaxi;
 
 public class Users {
-    String userName,number,email,pass, latitude, longitude, TaxiPlateNumber, userType, address,request_status;
+    String userName,number,email,pass, latitude, longitude, TaxiPlateNumber, userType, address,request_status,driverName;
     double points;
 
 
@@ -31,8 +31,8 @@ public class Users {
     }
 
 
-    public Users (String userName, String number, String email, String pass, String TaxiPlateNumber, String userType) {
-        this.userName = userName;
+    public Users (String driverName, String number, String email, String pass, String TaxiPlateNumber, String userType) {
+        this.driverName = driverName;
         this.number = number;
         this.email = email;
         this.pass = pass;
@@ -81,6 +81,7 @@ public class Users {
     public String getRequest_status(){
         return request_status;
     }
+    public String getDriverName(){return driverName;}
     public Double getPoints(){return points;}
 
 }

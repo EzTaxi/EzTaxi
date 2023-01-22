@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RecyclerAdapter extends RecyclerView.ViewHolder{
     ImageView imageView;
-    TextView Name, address, request_status;
+    TextView Name, address, request_status,driverName;
     View view;
 
 
@@ -32,6 +32,7 @@ public class RecyclerAdapter extends RecyclerView.ViewHolder{
         Name = itemView.findViewById(R.id.name);
         address = itemView.findViewById(R.id.address);
         request_status = itemView.findViewById(R.id.reqStats);
+        driverName = itemView.findViewById(R.id.driverName);
         view = itemView;
 
 
