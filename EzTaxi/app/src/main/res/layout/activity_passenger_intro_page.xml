@@ -58,17 +58,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_button"
-        android:text="Maps"
-        app:layout_constraintTop_toBottomOf="@+id/viewRequest"
+        android:text="request"
+        app:layout_constraintTop_toBottomOf="@+id/yourRequest"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/viewRequest"
+        android:id="@+id/yourRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/custom_button"
-        android:text="view request"
+        android:text="your request"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_editor_absoluteX="0dp" />
 

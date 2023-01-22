@@ -22,11 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ViewDriver extends AppCompatActivity {
 
-    private Button backButton, locateDriver;
-    private TextView driverNameText, driverPLTNText, driverNumberText;
+    private Button backButton, locateDriver, cancelReq;
+    private TextView driverNameText, driverPLTNText, driverNumberText,reqStats;
     private FirebaseAuth mAuth;
-    private DatabaseReference viewDriverInfo, requestStatusRef;
-    private String currentUserId, Name, driverplatenum, Number, requestStatus;
+    private DatabaseReference viewDriverInfo, requestStatusRef, reqStatus, cancelRequest;
+    private String currentUserId, Name, driverplatenum, Number, requestStatus, getReqStats;
 
 
     @Override
@@ -36,13 +36,34 @@ public class ViewDriver extends AppCompatActivity {
 
         backButton = findViewById(R.id.viewDriverBackButton);
         locateDriver = findViewById(R.id.LocateDriver);
+        cancelReq = findViewById(R.id.cancelRequest);
         driverNameText = findViewById(R.id.driverName);
         driverPLTNText = findViewById(R.id.driverPlateNum);
         driverNumberText = findViewById(R.id.driverNumber);
+        reqStats = findViewById(R.id.requeststatus);
 
 
         mAuth= FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
+
+        reqStatus = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId).child("request_status");
+        reqStatus.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    try {
+                        getReqStats = snapshot.getValue().toString();
+                        reqStats.setText(getReqStats);
+
+                    }catch (Exception e){}
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         requestStatusRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId).child("request_status");
@@ -54,8 +75,10 @@ public class ViewDriver extends AppCompatActivity {
                     try {
                         if (requestStatus.equals("Accepted") || requestStatus.equals("Completed")){
                             locateDriver.setVisibility(View.VISIBLE);
+                            cancelReq.setVisibility(View.GONE);
                         }else{
                             locateDriver.setVisibility(View.GONE);
+                            cancelReq.setVisibility(View.VISIBLE);
                         }
                     }catch (Exception e){
 
@@ -67,6 +90,16 @@ public class ViewDriver extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        //cancel req
+        cancelRequest = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested");
+        cancelReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ViewDriver.this, "Request cancelled", Toast.LENGTH_SHORT).show();
+                cancelRequest.child(currentUserId).removeValue();
             }
         });
 

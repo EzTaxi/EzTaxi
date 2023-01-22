@@ -69,7 +69,7 @@ public class passengerUserIntroPage extends AppCompatActivity {
             }
         });
 
-        viewReq = findViewById(R.id.viewRequest);
+        viewReq = findViewById(R.id.yourRequest);
         viewReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

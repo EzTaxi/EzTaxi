@@ -63,9 +63,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String selectedAdress;
     FusedLocationProviderClient fusedLocationProviderClient;
     private int LOCATION_REQUEST_CODE = 10002;
-    private String currentUserId, curUserName, curUserAddress;
+    private String currentUserId, curUserName, curUserAddress,requestStatus;
     private Double curUserLongitude, curUserLatitude;
-    private DatabaseReference userLatitude, userLongitude, userAddress, userReq, userInfo;
+    private DatabaseReference userLatitude, userLongitude, userAddress, userReq, userInfo, requestStatusRef;
     private FirebaseAuth mAuth;
     Marker userLocationMarker;
     private SupportMapFragment supportMapFragment;
@@ -111,6 +111,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        requestStatusRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId).child("request_status");
+        requestStatusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    requestStatus = snapshot.getValue().toString();
+                    try {
+                        if (requestStatus.equals("Requested") ||requestStatus.equals("Accepted") || requestStatus.equals("Completed")){
+                           sendReqButton.setVisibility(View.GONE);
+                        }else{
+                           sendReqButton.setVisibility(View.VISIBLE);
+                        }
+                    }catch (Exception e){
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         sendReqButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 sendReq();
             }
         });
+
 
 
     }
