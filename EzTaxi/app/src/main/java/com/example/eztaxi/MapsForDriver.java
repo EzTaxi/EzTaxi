@@ -49,8 +49,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 public class MapsForDriver extends FragmentActivity implements OnMapReadyCallback {
 
@@ -58,15 +61,15 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
     private ActivityMapsForDriverBinding binding;
     private Geocoder geocoder;
     private double setLatitude, setLongitude, getLatitude, getLongitude,passengerLat,passengerLong, driverLat, driverLong;
-    private int pointOfPass, points;
+    private int points;
     private List<Address> addresses;
     FusedLocationProviderClient fusedLocationProviderClient;
     private int LOCATION_REQUEST_CODE = 10002;
-    private String selectedAdress, getselectedAdress,currentUserId,driverName, driverPLTN, driverNum;
+    private String selectedAdress, getselectedAdress,currentUserId,driverName, driverPLTN, driverNum,passName;
     private DatabaseReference driverReferenceInitial,driverReferenceForName,driverReferenceForPLTN, databaseReference,
             driverReferenceForNum, driverNameRef, driverPlateNumRef, driverNumRef, acceptRef, completeRef,userLatitude,userLongitude, userAddress,
             passengerLatRef,passengerLongRef, driverLatRef, driverLongRef, getdriverLatRef, getdriverLongRef,driverReferenceLocation
-            ,CompletedRideRef, PointsRef, addPointsRef, drivernameGoToUserRef,yesRef;
+            ,CompletedRideRef, PointsRef, addPointsRef, drivernameGoToUserRef,yesRef,completedRides,passNameRef,numberOfCompletedRide;
     private FirebaseAuth mAuth;
     Marker userLocationMarker, passengerLocation;
     private SupportMapFragment supportMapFragment;
@@ -182,10 +185,12 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             drivernameGoToUserRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             getdriverLongRef = FirebaseDatabase.getInstance().getReference("Registered User");
             getdriverLatRef = FirebaseDatabase.getInstance().getReference("Registered User");
-
+            passNameRef = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(acceptedReqs);
             addPointsRef =FirebaseDatabase.getInstance().getReference("Registered User").child(acceptedReqs);
             PointsRef =FirebaseDatabase.getInstance().getReference("Registered User").child(acceptedReqs);
             yesRef =FirebaseDatabase.getInstance().getReference().child("Registered User").child(currentUserId);
+            completedRides =FirebaseDatabase.getInstance().getReference().child("Completed_Rides");
+            numberOfCompletedRide = FirebaseDatabase.getInstance().getReference().child("Completed_Rides").child(currentUserId).child("Completed Rides");
             yesRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -195,15 +200,20 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                         driverReferenceForName.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String me = snapshot.child("driverName").getValue().toString();
-                                Log.d(TAG, "me " + me);
-                                if(na.equals(me)){
-                                    acceptRequestReqButton.setVisibility(View.VISIBLE);
-                                    completeRide.setVisibility(View.VISIBLE);
-                                }else {
-                                    acceptRequestReqButton.setVisibility(View.GONE);
-                                    completeRide.setVisibility(View.GONE);
+                                try {
+                                    String me = snapshot.child("driverName").getValue().toString();
+                                    Log.d(TAG, "me " + me);
+                                    if(na.equals(me)){
+                                        acceptRequestReqButton.setVisibility(View.VISIBLE);
+                                        completeRide.setVisibility(View.VISIBLE);
+                                    }else {
+                                        acceptRequestReqButton.setVisibility(View.GONE);
+                                        completeRide.setVisibility(View.GONE);
+                                    }
+                                }catch (Exception e){
+
                                 }
+
                             }
 
                             @Override
@@ -258,6 +268,33 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
                         }
                     });
+                    Map<String, String> num = new HashMap<>();
+                    int number = 0;
+                    num.put(String.valueOf(number),passName);
+                    completedRides.child(currentUserId).child("Completed Rides").push().setValue(num).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+
+                        }
+                    });
+
+                }
+            });
+            //get the name of passanger
+            passNameRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    try {
+                        if (snapshot.exists()){
+                            passName = snapshot.child("userName").getValue().toString();
+                        }
+                    }catch (Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
 
