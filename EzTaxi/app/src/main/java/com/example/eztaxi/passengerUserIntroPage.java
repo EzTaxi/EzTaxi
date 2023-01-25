@@ -38,6 +38,19 @@ public class passengerUserIntroPage extends AppCompatActivity {
         Points = findViewById(R.id.points);
         textView2 =findViewById(R.id.textView2);
 
+        Points.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(passengerUserIntroPage.this, ConversionOfPoints.class));
+            }
+        });
+        textView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(passengerUserIntroPage.this, ConversionOfPoints.class));
+            }
+        });
+
         mAuth= FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 

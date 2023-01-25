@@ -268,6 +268,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
                         }
                     });
+                    completedRides.child(currentUserId).child("driver_name").setValue(driverName);
                     Map<String, String> num = new HashMap<>();
                     int number = 0;
                     num.put(String.valueOf(number),passName);

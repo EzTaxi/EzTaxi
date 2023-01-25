@@ -3,7 +3,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="googleApi">AIzaSyAIwKH72JQQWd2Ga8t4-ndYsKJ5Od0GfQo</string>
     <string-array name="user_type">
-        <item>Ordinary User</item>
+        <item>Passenger</item>
         <item>Driver</item>
         <item>Admin</item>
     </string-array>
