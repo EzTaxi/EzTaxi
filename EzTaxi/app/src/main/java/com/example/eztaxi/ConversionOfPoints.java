@@ -81,7 +81,7 @@ public class ConversionOfPoints extends AppCompatActivity {
                                         Log.e(TAG, "your points is : " + userPoints);
                                         newPoints = userPoints - 100;
                                         pointsOfUser.child("points").setValue(newPoints);
-
+                                        startActivity(new Intent(ConversionOfPoints.this,FreeRidePage.class));
                                         Log.e(TAG, "your points is : " + newPoints);
                                     }else{
                                         Toast.makeText(ConversionOfPoints.this, "You don't have enough points", Toast.LENGTH_SHORT).show();

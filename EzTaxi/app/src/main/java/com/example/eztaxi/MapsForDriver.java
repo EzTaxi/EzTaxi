@@ -580,6 +580,8 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
                         userLatitude.child(currentUserId).child("Current User Location").child("Latitude").setValue(setLatitude);
                         userLongitude.child(currentUserId).child("Current User Location").child("Longitude").setValue(setLongitude);
+                        driverLatRef.child("Accepted").child(currentUserId).child("Latitude").setValue(setLatitude);
+                        driverLongRef.child("Accepted").child(currentUserId).child("Longitude").setValue(setLongitude);
 
                     }
                     else{
