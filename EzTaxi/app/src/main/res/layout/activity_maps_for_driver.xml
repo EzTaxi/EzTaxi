@@ -36,6 +36,7 @@ android:layout_gravity="center">
             android:layout_gravity="bottom"
             android:background="@drawable/custom_button"
             android:text="Accept Request"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

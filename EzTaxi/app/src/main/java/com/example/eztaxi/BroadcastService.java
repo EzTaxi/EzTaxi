@@ -33,8 +33,6 @@ public class BroadcastService extends Service{
         mAuth= FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
-
-
         Log.i(TAG, "Starting timer...");
 
         countdown = new CountDownTimer(20000, 1000) {
@@ -53,26 +51,25 @@ public class BroadcastService extends Service{
                 removeRequest = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested");
                 reqstats = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId);
 
-                reqstats.addValueEventListener(new ValueEventListener() {
+                reqstats.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
-                            /*
+
                             try{
                                 String stats = snapshot.child("request_status").getValue().toString();
                                 if (stats.equals("Requested")){
-                                    //reqstats.child("request_status").setValue("requestFailed");
-                                    if (stats.equals("requestFailed")){
-                                        removeRequest.child(currentUserId).removeValue();
-                                        Log.i(TAG, "Request removed");
-                                    }else {
-                                        Log.i(TAG, "Request accepted");
-                                    }
+                                    reqstats.child("request_status").setValue("requestFailed");
+                                    removeRequest.child(currentUserId).removeValue();
+                                    Log.i(TAG, "Request removed");
+                                }
+                                else {
+                                    Log.i(TAG, "Request already accepted");
                                 }
 
                             }catch (Exception e){}
 
-                             */
+
                         }
                     }
                     @Override

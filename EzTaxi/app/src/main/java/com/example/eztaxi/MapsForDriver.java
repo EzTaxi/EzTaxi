@@ -199,7 +199,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                     if (snapshot.exists()){
                         String drivName = snapshot.child("driverName").getValue().toString();
                         Log.d(TAG, "na " + drivName);
-                        driverReferenceForName.addValueEventListener(new ValueEventListener() {
+                        driverReferenceForName.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 try {
@@ -252,7 +252,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             });
 
             // for Passenger
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try {
@@ -277,13 +277,15 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                                     acceptRequestReqButton.setVisibility(View.GONE);
                                     Log.d(TAG, "completed stats " + stats);
                                 }
-                                else {
+                                else if(stats.equals("Requested")){
                                     completeRide.setVisibility(View.GONE);
-                                    acceptRequestReqButton.setVisibility(View.GONE);
+                                    acceptRequestReqButton.setVisibility(View.VISIBLE);
                                 }
                             }catch (Exception e){
 
                             }
+
+
 
 
                         }
@@ -302,7 +304,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                 @Override
                 public void onClick(View v) {
                     backBtn.setVisibility(View.GONE);
-                    drivernameGoToUserRef.addValueEventListener(new ValueEventListener() {
+                    drivernameGoToUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
@@ -317,6 +319,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                     });
 
                     acceptRef.child("request_status").setValue("Accepted");
+                    //acceptRequestReqButton.setVisibility(View.GONE);
                     driverReferenceInitial.child("Accepted").child(currentUserId);
                     driverReferenceInitial.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -335,7 +338,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
-                    acceptRequestReqButton.setVisibility(View.GONE);
+
                 }
             });
 
@@ -499,7 +502,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                     }
                 });
                 completeRef.child("request_status").setValue("Completed");
-                completeRide.setVisibility(View.GONE);
+               //completeRide.setVisibility(View.GONE);
             }
         });
 
