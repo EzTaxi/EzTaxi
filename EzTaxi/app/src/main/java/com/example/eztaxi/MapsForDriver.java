@@ -46,6 +46,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -195,15 +197,15 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
-                        String na = snapshot.child("driverName").getValue().toString();
-                        Log.d(TAG, "na " + na);
+                        String drivName = snapshot.child("driverName").getValue().toString();
+                        Log.d(TAG, "na " + drivName);
                         driverReferenceForName.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 try {
-                                    String me = snapshot.child("driverName").getValue().toString();
-                                    Log.d(TAG, "me " + me);
-                                    if(na.equals(me)){
+                                    String curDriverName = snapshot.child("driverName").getValue().toString();
+                                    Log.d(TAG, "me " + curDriverName);
+                                    if(drivName.equals(curDriverName)){
                                         acceptRequestReqButton.setVisibility(View.VISIBLE);
                                         completeRide.setVisibility(View.VISIBLE);
                                     }else {
@@ -248,19 +250,64 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
                 }
             });
-            completeRide.setOnClickListener(new View.OnClickListener() {
+
+            // for Passenger
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    try {
+                        if (snapshot.exists()){
+                            String nameUser = snapshot.child("userName").getValue().toString();
+                            String address = snapshot.child("address").getValue().toString();
+                            String stats = snapshot.child("request_status").getValue().toString();
+
+                            nameUsers.setText(nameUser);
+                            addressUser.setText(address);
+                            userStats.setText(stats);
+
+                            try {
+                                Log.d(TAG, "stats " + stats);
+                                if (stats.equals("Accepted")){
+                                    acceptRequestReqButton.setVisibility(View.GONE);
+                                    Log.d(TAG, "accepted stats " + stats);
+                                    completeRide.setVisibility(View.VISIBLE);
+                                }
+                                else if(stats.equals("Completed")){
+                                    completeRide.setVisibility(View.GONE);
+                                    acceptRequestReqButton.setVisibility(View.GONE);
+                                    Log.d(TAG, "completed stats " + stats);
+                                }
+                                else {
+                                    completeRide.setVisibility(View.GONE);
+                                    acceptRequestReqButton.setVisibility(View.GONE);
+                                }
+                            }catch (Exception e){
+
+                            }
+
+
+                        }
+                    }catch (Exception e){
+                        Log.d(TAG, "No Info");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            acceptRequestReqButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addPointsRef.addValueEventListener(new ValueEventListener() {
-                        int addPoint =points + 10;
+                    backBtn.setVisibility(View.GONE);
+                    drivernameGoToUserRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            try {
-                                addPointsRef.child("points").setValue(addPoint);
-                                completeRef.child("request_status").setValue("Completed");
-                                startActivity(new Intent(MapsForDriver.this, UserDriverActivity.class));
-
-                            }catch (Exception e){}
+                            if (snapshot.exists()) {
+                                drivernameGoToUserRef.child("driverName").setValue(driverName);
+                            }
                         }
 
                         @Override
@@ -268,18 +315,31 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
 
                         }
                     });
-                    completedRides.child(currentUserId).child("driver_name").setValue(driverName);
-                    Map<String, String> num = new HashMap<>();
-                    int number = 0;
-                    num.put(String.valueOf(number),passName);
-                    completedRides.child(currentUserId).child("Completed Rides").push().setValue(num).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()){
 
+                    acceptRef.child("request_status").setValue("Accepted");
+                    driverReferenceInitial.child("Accepted").child(currentUserId);
+                    driverReferenceInitial.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            try {
+                                if(snapshot.exists()){
+                                    driverReferenceForName.child("Accepted").child(currentUserId).child("Name").setValue(driverName);
+                                    driverReferenceForPLTN.child("Accepted").child(currentUserId).child("Plate Number").setValue(driverPLTN);
+                                    driverReferenceForNum.child("Accepted").child(currentUserId).child("Number").setValue(driverNum);
+                                    Toast.makeText(MapsForDriver.this, "Accepted!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }catch (Exception e){Log.d(TAG, "No Info");}
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
-
+                    acceptRequestReqButton.setVisibility(View.GONE);
                 }
             });
+
+
             //get the name of passanger
             passNameRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -299,46 +359,6 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                 }
             });
 
-            // for Passenger
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    try {
-                        if (snapshot.exists()){
-                            String nameUser = snapshot.child("userName").getValue().toString();
-                            String address = snapshot.child("address").getValue().toString();
-                            String stats = snapshot.child("request_status").getValue().toString();
-
-                            nameUsers.setText(nameUser);
-                            addressUser.setText(address);
-                            userStats.setText(stats);
-
-                            try {
-                                Log.d(TAG, "stats " + stats);
-                                if (stats.equals("Accepted")){
-                                    acceptRequestReqButton.setVisibility(View.GONE);
-                                    Log.d(TAG, "stats " + stats);
-                                    completeRide.setVisibility(View.VISIBLE);
-                                }
-                            }catch (Exception e){
-
-                            }
-                            if(stats.equals("Completed")){
-                                completeRide.setVisibility(View.GONE);
-                                acceptRequestReqButton.setVisibility(View.GONE);
-                            }
-
-                        }
-                    }catch (Exception e){
-                        Log.d(TAG, "No Info");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
 
             passengerLatRef.child("LatLong").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -420,7 +440,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             });
         }catch (Exception e){}
 
-        driverReferenceLocation.child("Acceoted").child(currentUserId);
+        driverReferenceLocation.child("Accepted").child(currentUserId);
         driverReferenceLocation.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -434,46 +454,6 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        acceptRequestReqButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backBtn.setVisibility(View.GONE);
-                drivernameGoToUserRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            drivernameGoToUserRef.child("driverName").setValue(driverName);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                acceptRef.child("request_status").setValue("Accepted");
-                driverReferenceInitial.child("Accepted").child(currentUserId);
-                driverReferenceInitial.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            if(snapshot.exists()){
-                                driverReferenceForName.child("Accepted").child(currentUserId).child("Name").setValue(driverName);
-                                driverReferenceForPLTN.child("Accepted").child(currentUserId).child("Plate Number").setValue(driverPLTN);
-                                driverReferenceForNum.child("Accepted").child(currentUserId).child("Number").setValue(driverNum);
-                                Toast.makeText(MapsForDriver.this, "Accepted!", Toast.LENGTH_SHORT).show();
-                            }
-                        }catch (Exception e){Log.d(TAG, "No Info");}
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            }
-        });
-
 
 
     }
@@ -489,7 +469,45 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
         } else {
             askLocationPermission();
         }
+
+        completeRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    int addPoint =points + 10;
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            addPointsRef.child("points").setValue(addPoint);
+                            startActivity(new Intent(MapsForDriver.this, UserDriverActivity.class));
+
+                        }catch (Exception e){}
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                completedRides.child(currentUserId).child("driver_name").setValue(driverName);
+                Map<String, String> num = new HashMap<>();
+                int number = 0;
+                num.put(String.valueOf(number),passName);
+                completedRides.child(currentUserId).child("Completed Rides").push().setValue(num).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+
+                    }
+                });
+                completeRef.child("request_status").setValue("Completed");
+                completeRide.setVisibility(View.GONE);
+            }
+        });
+
+
+
     }
+
+
 
     @Override
     protected void onStop() {

@@ -63,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String selectedAdress;
     FusedLocationProviderClient fusedLocationProviderClient;
     private int LOCATION_REQUEST_CODE = 10002;
-    private String currentUserId, curUserName, curUserAddress,requestStatus;
+    private String currentUserId, curUserName, curUserAddress,requestStatus, statusRide;
     private Double curUserLongitude, curUserLatitude;
     private DatabaseReference userLatitude, userLongitude, userAddress, userReq, userInfo, requestStatusRef;
     private FirebaseAuth mAuth;
@@ -137,12 +137,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        sendReqButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendReq();
-            }
-        });
 
 
 
@@ -151,7 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Toast.makeText(MapsActivity.this, "Request will be void after 18 minutes", Toast.LENGTH_SHORT).show();
         userInfo = FirebaseDatabase.getInstance().getReference("Registered User");
         userReq = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested");
-        userInfo.addValueEventListener(new ValueEventListener() {
+        userInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -166,12 +160,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         userReq.child(currentUserId).child("request_status").setValue("Requested");
                         userReq.child(currentUserId).child("LatLong").child("Latitude").setValue(curUserLatitude);
                         userReq.child(currentUserId).child("LatLong").child("Longitude").setValue(curUserLongitude);
+
+                        statusRide = snapshot.child(currentUserId).child("request_status").getValue(String.class);
+                        if (!statusRide.equals("Requested")){
+                            Log.d(TAG, "na ");
+                        }else {
+
+                        }
+
+
                     } catch (Exception e) {}
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
         });
         startActivity(new Intent(MapsActivity.this, SentRequest.class));
     }
@@ -186,6 +191,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             askLocationPermission();
         }
+
+        sendReqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendReq();
+            }
+        });
     }
 
     @Override

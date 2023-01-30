@@ -48,9 +48,7 @@ public class Users {
         this.userType = userType;
         this.points = points;
     }
-    public Users(String request_status){
-        this.request_status = request_status;
-    }
+
     public String getUserName() {
         return userName;
     }
