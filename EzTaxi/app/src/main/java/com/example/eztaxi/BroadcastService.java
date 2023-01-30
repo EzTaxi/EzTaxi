@@ -20,7 +20,7 @@ public class BroadcastService extends Service{
 
     public static final String COUNTDOWN_BR = "com.example.eztaxi";
     Intent intent = new Intent(COUNTDOWN_BR);
-    private int timeNumber = 1_080_000;
+    private int timeNumber = 1080001;
     CountDownTimer countdown = null;
     private DatabaseReference removeRequest,reqstats;
     private String currentUserId;
@@ -35,7 +35,7 @@ public class BroadcastService extends Service{
 
         Log.i(TAG, "Starting timer...");
 
-        countdown = new CountDownTimer(20000, 1000) {
+        countdown = new CountDownTimer(timeNumber, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -69,16 +69,19 @@ public class BroadcastService extends Service{
 
                             }catch (Exception e){}
 
-
+                            countdown.start();
                         }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}
+
                 });
 
 
 
             }
+
         };
 
         countdown.start();
