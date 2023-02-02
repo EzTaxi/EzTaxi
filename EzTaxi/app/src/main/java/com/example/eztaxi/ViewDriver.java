@@ -23,11 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ViewDriver extends AppCompatActivity {
 
-    private Button backButton, locateDriver, cancelReq, messageB1;
+    private Button backButton, locateDriver, cancelReq, messageBtn;
     private TextView driverNameText, driverPLTNText, driverNumberText,reqStats;
     private FirebaseAuth mAuth;
-    private DatabaseReference viewDriverInfo, requestStatusRef, reqStatus, cancelRequest;
-    private String currentUserId, Name, driverplatenum, Number, requestStatus, getReqStats;
+    private DatabaseReference viewDriverInfo, requestStatusRef, reqStatus, cancelRequest, driverNumber;
+    private String currentUserId, Name, driverplatenum, Number, requestStatus, getReqStats, driverNumTxt;
 
 
     @Override
@@ -42,6 +42,7 @@ public class ViewDriver extends AppCompatActivity {
         driverPLTNText = findViewById(R.id.driverPlateNum);
         driverNumberText = findViewById(R.id.driverNumber);
         reqStats = findViewById(R.id.requeststatus);
+        messageBtn = findViewById(R.id.messageB1);
 
 
         mAuth= FirebaseAuth.getInstance();
@@ -56,8 +57,42 @@ public class ViewDriver extends AppCompatActivity {
                         getReqStats = snapshot.getValue().toString();
                         reqStats.setText(getReqStats);
 
+
+
                     }catch (Exception e){}
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        driverNumber = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId);
+        driverNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    try {
+                        driverNumTxt = snapshot.child("NumberOfDriver").getValue().toString();
+                        Log.d(TAG, driverNumTxt);
+                        messageBtn = (Button) findViewById(R.id.messageB1);
+                        messageBtn.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                Uri SendMessage = Uri.parse("smsto:" + driverNumTxt);
+                                Intent intent = new Intent(Intent.ACTION_SENDTO, SendMessage);
+                                startActivity(intent);
+                            }
+                        });
+
+                    }catch (Exception e){
+
+                    }
+
+
+
+
             }
 
             @Override
@@ -77,11 +112,11 @@ public class ViewDriver extends AppCompatActivity {
                         if (requestStatus.equals("Accepted") || requestStatus.equals("Completed")){
                             locateDriver.setVisibility(View.VISIBLE);
                             cancelReq.setVisibility(View.GONE);
-                            messageB1.setVisibility(View.VISIBLE);
+                            messageBtn.setVisibility(View.VISIBLE);
                         }else{
                             locateDriver.setVisibility(View.GONE);
                             cancelReq.setVisibility(View.VISIBLE);
-                            messageB1.setVisibility(View.GONE);
+                            messageBtn.setVisibility(View.GONE);
                         }
                     }catch (Exception e){
 
@@ -123,7 +158,6 @@ public class ViewDriver extends AppCompatActivity {
         });
 
         viewDriverInfo = FirebaseDatabase.getInstance().getReference("User Requested").child("Requested").child(currentUserId).child("Accepted");
-
         viewDriverInfo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -136,7 +170,8 @@ public class ViewDriver extends AppCompatActivity {
 
                             driverNameText.setText(Name);
                             driverPLTNText.setText(driverplatenum);
-                            driverNumberText.setText(Number);
+                            driverNumberText.setText(driverNumTxt);
+
 
                     }
                 }catch (Exception e){
@@ -151,15 +186,7 @@ public class ViewDriver extends AppCompatActivity {
             }
         });
 
-        messageB1 = (Button) findViewById(R.id.messageB1);
-        messageB1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Uri SendMessage = Uri.parse("smsto:" + "123123123");
-                Intent intent = new Intent(Intent.ACTION_SENDTO, SendMessage);
-                startActivity(intent);
-            }
-        });
+
 
     }
 }

@@ -154,7 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         curUserAddress = snapshot.child(currentUserId).child("Current User Address").getValue(String.class);
                         curUserLongitude = snapshot.child(currentUserId).child("Current User Location").child("Longitude").getValue(Double.class);
                         curUserLatitude = snapshot.child(currentUserId).child("Current User Location").child("Latitude").getValue(Double.class);
-                        curUserNumber = snapshot.child(currentUserId).child("numberofpassenger").getValue().toString();
+                        curUserNumber = snapshot.child(currentUserId).child("number").getValue().toString();
 
                         userReq.child(currentUserId).child("userName").setValue(curUserName);
                         userReq.child(currentUserId).child("address").setValue(curUserAddress);
