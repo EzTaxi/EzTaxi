@@ -44,16 +44,31 @@ android:layout_gravity="center">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/CompleteRide"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
             android:background="@drawable/custom_button"
             android:text="Completed Ride"
-            android:visibility="gone"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/messagebtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/custom_button"
+            android:text="Message"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/map" />
+            app:layout_constraintHorizontal_bias="0.526"
+            app:layout_constraintStart_toEndOf="@+id/CompleteRide"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintVertical_bias="0.6" />
 
         <fragment
             android:id="@+id/map"

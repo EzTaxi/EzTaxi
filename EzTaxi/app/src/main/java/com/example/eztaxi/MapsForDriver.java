@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -67,15 +68,15 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
     private List<Address> addresses;
     FusedLocationProviderClient fusedLocationProviderClient;
     private int LOCATION_REQUEST_CODE = 10002;
-    private String selectedAdress, getselectedAdress,currentUserId,driverName, driverPLTN, driverNum,passName;
+    private String selectedAdress, getselectedAdress,currentUserId,driverName, driverPLTN, driverNum,passName, driverNumber1;
     private DatabaseReference driverReferenceInitial,driverReferenceForName,driverReferenceForPLTN, databaseReference,
             driverReferenceForNum, driverNameRef, driverPlateNumRef, driverNumRef, acceptRef, completeRef,userLatitude,userLongitude, userAddress,
             passengerLatRef,passengerLongRef, driverLatRef, driverLongRef, getdriverLatRef, getdriverLongRef,driverReferenceLocation
-            ,CompletedRideRef, PointsRef, addPointsRef, drivernameGoToUserRef,yesRef,completedRides,passNameRef,numberOfCompletedRide;
+            ,CompletedRideRef, PointsRef, addPointsRef, drivernameGoToUserRef,yesRef,completedRides,passNameRef,numberOfCompletedRide, passengerNumber, driverNumber;
     private FirebaseAuth mAuth;
     Marker userLocationMarker, passengerLocation;
     private SupportMapFragment supportMapFragment;
-    private Button acceptRequestReqButton, backBtn, completeRide;
+    private Button acceptRequestReqButton, backBtn, completeRide, messageBTN;
     private TextView nameUsers, addressUser, userStats;
     private LocationRequest locationRequest;
 
@@ -168,6 +169,17 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             }
         });
 
+        messageBTN = (Button) findViewById(R.id.messagebtn);
+        messageBTN.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                Uri SendMessage = Uri.parse("smsto:" + "");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, SendMessage);
+                startActivity(intent);
+            }
+        });
+
 
         try {
             String acceptedReqs = getIntent().getStringExtra("UserRequested"); // from RecyclerActivity
@@ -192,6 +204,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
             PointsRef =FirebaseDatabase.getInstance().getReference("Registered User").child(acceptedReqs);
             yesRef =FirebaseDatabase.getInstance().getReference().child("Registered User").child(currentUserId);
             completedRides =FirebaseDatabase.getInstance().getReference().child("Completed_Rides");
+            passengerNumber = FirebaseDatabase.getInstance().getReference("Registered User").child(currentUserId);
             numberOfCompletedRide = FirebaseDatabase.getInstance().getReference().child("Completed_Rides").child(currentUserId).child("Completed Rides");
             yesRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -224,6 +237,18 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                             }
                         });
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            driverNumber.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    driverNumber1 = snapshot.child("number").getValue().toString();
                 }
 
                 @Override

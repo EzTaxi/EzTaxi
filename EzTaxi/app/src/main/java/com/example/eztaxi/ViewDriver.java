@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ViewDriver extends AppCompatActivity {
 
-    private Button backButton, locateDriver, cancelReq;
+    private Button backButton, locateDriver, cancelReq, messageB1;
     private TextView driverNameText, driverPLTNText, driverNumberText,reqStats;
     private FirebaseAuth mAuth;
     private DatabaseReference viewDriverInfo, requestStatusRef, reqStatus, cancelRequest;
@@ -76,9 +77,11 @@ public class ViewDriver extends AppCompatActivity {
                         if (requestStatus.equals("Accepted") || requestStatus.equals("Completed")){
                             locateDriver.setVisibility(View.VISIBLE);
                             cancelReq.setVisibility(View.GONE);
+                            messageB1.setVisibility(View.VISIBLE);
                         }else{
                             locateDriver.setVisibility(View.GONE);
                             cancelReq.setVisibility(View.VISIBLE);
+                            messageB1.setVisibility(View.GONE);
                         }
                     }catch (Exception e){
 
@@ -145,6 +148,16 @@ public class ViewDriver extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        messageB1 = (Button) findViewById(R.id.messageB1);
+        messageB1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Uri SendMessage = Uri.parse("smsto:" + "123123123");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, SendMessage);
+                startActivity(intent);
             }
         });
 

@@ -60,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Geocoder geocoder;
     private double setLatitude, setLongitude;
     private List<Address> addresses;
-    private String selectedAdress;
+    private String selectedAdress, curUserNumber;
     FusedLocationProviderClient fusedLocationProviderClient;
     private int LOCATION_REQUEST_CODE = 10002;
     private String currentUserId, curUserName, curUserAddress,requestStatus, statusRide;
@@ -154,12 +154,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         curUserAddress = snapshot.child(currentUserId).child("Current User Address").getValue(String.class);
                         curUserLongitude = snapshot.child(currentUserId).child("Current User Location").child("Longitude").getValue(Double.class);
                         curUserLatitude = snapshot.child(currentUserId).child("Current User Location").child("Latitude").getValue(Double.class);
+                        curUserNumber = snapshot.child(currentUserId).child("numberofpassenger").getValue().toString();
 
                         userReq.child(currentUserId).child("userName").setValue(curUserName);
                         userReq.child(currentUserId).child("address").setValue(curUserAddress);
                         userReq.child(currentUserId).child("request_status").setValue("Requested");
                         userReq.child(currentUserId).child("LatLong").child("Latitude").setValue(curUserLatitude);
                         userReq.child(currentUserId).child("LatLong").child("Longitude").setValue(curUserLongitude);
+                        userReq.child(currentUserId).child("numberofpassenger").setValue(curUserNumber);
 
                         statusRide = snapshot.child(currentUserId).child("request_status").getValue(String.class);
                         if (!statusRide.equals("Requested")){
