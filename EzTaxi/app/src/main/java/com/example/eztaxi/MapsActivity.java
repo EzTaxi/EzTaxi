@@ -161,7 +161,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         userReq.child(currentUserId).child("request_status").setValue("Requested");
                         userReq.child(currentUserId).child("LatLong").child("Latitude").setValue(curUserLatitude);
                         userReq.child(currentUserId).child("LatLong").child("Longitude").setValue(curUserLongitude);
-                        userReq.child(currentUserId).child("numberofpassenger").setValue(curUserNumber);
+                        userReq.child(currentUserId).child("number").setValue(curUserNumber);
 
                         statusRide = snapshot.child(currentUserId).child("request_status").getValue(String.class);
                         if (!statusRide.equals("Requested")){
