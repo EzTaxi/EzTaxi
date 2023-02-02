@@ -170,7 +170,7 @@ public class ViewDriver extends AppCompatActivity {
 
                             driverNameText.setText(Name);
                             driverPLTNText.setText(driverplatenum);
-                            driverNumberText.setText(driverNumTxt);
+                            driverNumberText.setText(Number);
 
 
                     }
