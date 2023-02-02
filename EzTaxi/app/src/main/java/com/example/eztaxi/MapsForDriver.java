@@ -246,6 +246,7 @@ public class MapsForDriver extends FragmentActivity implements OnMapReadyCallbac
                     }
                 }
 
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
