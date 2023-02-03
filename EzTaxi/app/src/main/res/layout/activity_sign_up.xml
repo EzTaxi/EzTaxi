@@ -19,22 +19,17 @@
         android:scrollbars="vertical"
         tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/Logo"
-            android:layout_width="218dp"
-            android:layout_height="149dp"
-            tools:srcCompat="@drawable/eztaxilogo" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/moderne"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/fs_me_reg"
             android:gravity="center"
-            android:padding="10dp"
-            android:text="Ez Taxi"
-            android:textSize="40sp" />
+            android:padding="30dp"
+            android:text="Sign In"
+            android:textColor="#1c1c2f"
+            android:textSize="60sp" />
 
         <EditText
             android:id="@+id/textName"
@@ -44,6 +39,8 @@
             android:background="@drawable/edit_text_border"
             android:gravity="center"
             android:hint="Name"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:inputType="textPersonName"
             android:padding="10dp" />
 
@@ -55,6 +52,8 @@
             android:background="@drawable/edit_text_border"
             android:gravity="center"
             android:hint="Phone Number"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:inputType="number"
             android:padding="10dp" />
 
@@ -66,6 +65,8 @@
             android:background="@drawable/edit_text_border"
             android:gravity="center"
             android:hint="Email"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:inputType="textEmailAddress"
             android:padding="10dp"
 
@@ -79,6 +80,8 @@
             android:background="@drawable/edit_text_border"
             android:gravity="center"
             android:hint="Password"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:inputType="textPassword"
             android:padding="10dp" />
 
@@ -86,13 +89,15 @@
             android:id="@+id/btnSignUpAcc"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/custom_button"
-            android:fontFamily="sans-serif-black"
-            android:padding="10dp"
+            android:fontFamily="@font/moderne_sans_font"
+            android:padding="15dp"
             android:text="Sign up"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textStyle="bold"
+            android:textColor="#1c1c2f"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,7 +106,7 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="2dp"
                 android:background="@android:color/black" />
 
@@ -109,11 +114,13 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:gravity="center"
+                android:fontFamily="@font/moderne"
+                android:textColor="#1c1c2f"
                 android:text="Or"
                 android:textSize="15dp" />
 
             <View
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="2dp"
                 android:background="@android:color/black" />
         </LinearLayout>
@@ -122,7 +129,10 @@
             android:id="@+id/loginAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:clickable="true"
+            android:fontFamily="@font/moderne_sans_font"
+            android:textColor="#1c1c2f"
             android:text="Login"
             android:textSize="20dp"
             android:textStyle="bold" />

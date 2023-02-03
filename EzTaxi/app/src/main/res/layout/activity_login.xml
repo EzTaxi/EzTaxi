@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="198dp"
-            android:layout_height="129dp"
+            android:layout_width="222dp"
+            android:layout_height="151dp"
             app:srcCompat="@drawable/eztaxilogo" />
 
         <TextView
@@ -27,11 +27,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/fs_me_reg"
             android:gravity="center"
             android:padding="10dp"
-            android:fontFamily="@font/moderne"
             android:text="Ez Taxi"
-            android:textSize="100px" />
+            android:textColor="#1c1c2f"
+            android:textSize="50sp" />
 
         <EditText
             android:id="@+id/text_email"
@@ -41,6 +42,8 @@
             android:background="@drawable/edit_text_border"
             android:gravity="center"
             android:hint="Enter Email"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:inputType="textEmailAddress"
             android:padding="20dp"
 
@@ -55,6 +58,8 @@
             android:gravity="center"
             android:hint="Enter Password"
             android:inputType="textPassword"
+            android:textColorHint="#373739"
+            android:fontFamily="@font/fs_me_italic"
             android:padding="20dp"
 
             />
@@ -63,13 +68,26 @@
             android:id="@+id/btnSubmit_login"
             android:layout_width="250dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/custom_button"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/moderne_sans_font"
+            android:textStyle="bold"
             android:padding="10dp"
             android:text="Login"
-            android:textColor="#1B1515"
-            android:textSize="18sp" />
+            android:textColor="#1c1c2f"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/forgotPass"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:fontFamily="@font/moderne_sans_font"
+            android:text="Forgot Password?"
+            android:textAlignment="center"
+            android:textColor="#1c1c2f"
+            android:textSize="18dp"
+            android:textStyle="italic" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +96,7 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="2dp"
                 android:background="@android:color/black" />
 
@@ -86,32 +104,27 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:gravity="center"
+                android:fontFamily="@font/moderne"
+                android:textColor="#1c1c2f"
                 android:text="Or"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <View
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="2dp"
                 android:background="@android:color/black" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/createAcc"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:text="Create an Account"
-            android:fontFamily="@font/moderne"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/forgotPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="Forgot Password?"
-            android:fontFamily="@font/moderne"
+            android:textAlignment="center"
+            android:fontFamily="@font/moderne_sans_font"
+            android:textColor="#1c1c2f"
+            android:padding="5dp"
             android:textSize="20dp"
             android:textStyle="bold" />
 
